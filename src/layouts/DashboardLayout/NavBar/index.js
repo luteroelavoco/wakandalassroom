@@ -59,25 +59,10 @@ const items = [
     title: 'Team'
   },
   {
-    href: '/app/settings',
+    href: '/app/definicoes',
     icon: SettingsIcon,
-    title: 'Settings'
+    title: 'Definições'
   },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
-  }
 ];
 
 const useStyles = makeStyles(() => ({

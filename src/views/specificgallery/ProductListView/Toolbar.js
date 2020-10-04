@@ -46,13 +46,13 @@ const Button = styled.button`
   }
 `;
 
-export default function IconTabs({ className, ...rest }) {
+export default function IconTabs({ className,setSeletedAba ,...rest }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
+    setSeletedAba(newValue);
   };
 
   return (

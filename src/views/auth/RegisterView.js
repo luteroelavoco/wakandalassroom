@@ -31,12 +31,13 @@ const RegisterView = () => {
   return (
     <Page
       className={classes.root}
-      title="Register"
+      title="Registar usuário"
     >
       <Box
         display="flex"
         flexDirection="column"
         height="100%"
+        style={{marginTop: '10px'}}
         justifyContent="center"
       >
         <Container maxWidth="sm">
@@ -50,15 +51,14 @@ const RegisterView = () => {
             }}
             validationSchema={
               Yup.object().shape({
-                email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
-                password: Yup.string().max(255).required('password is required'),
-                policy: Yup.boolean().oneOf([true], 'This field must be checked')
+                email: Yup.string().email('O Email deve ser válido').max(255).required('Email é necessário'),
+                firstName: Yup.string().max(255).required('Primeiro nome é obrigatório'),
+                lastName: Yup.string().max(255).required('Último nome é obrigatório'),
+                password: Yup.string().max(255).required('Palavra passe é obrigatório'),
               })
             }
             onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+              navigate('/app/estatitica', { replace: true });
             }}
           >
             {({
@@ -76,21 +76,14 @@ const RegisterView = () => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Create new account
-                  </Typography>
-                  <Typography
-                    color="textSecondary"
-                    gutterBottom
-                    variant="body2"
-                  >
-                    Use your email to create new account
+                    Adicionar um novo membro
                   </Typography>
                 </Box>
                 <TextField
                   error={Boolean(touched.firstName && errors.firstName)}
                   fullWidth
                   helperText={touched.firstName && errors.firstName}
-                  label="First name"
+                  label="Primeiro nome"
                   margin="normal"
                   name="firstName"
                   onBlur={handleBlur}
@@ -102,7 +95,7 @@ const RegisterView = () => {
                   error={Boolean(touched.lastName && errors.lastName)}
                   fullWidth
                   helperText={touched.lastName && errors.lastName}
-                  label="Last name"
+                  label="Último nome"
                   margin="normal"
                   name="lastName"
                   onBlur={handleBlur}
@@ -114,7 +107,7 @@ const RegisterView = () => {
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
                   helperText={touched.email && errors.email}
-                  label="Email Address"
+                  label="E-mail"
                   margin="normal"
                   name="email"
                   onBlur={handleBlur}
@@ -127,7 +120,7 @@ const RegisterView = () => {
                   error={Boolean(touched.password && errors.password)}
                   fullWidth
                   helperText={touched.password && errors.password}
-                  label="Password"
+                  label="Senha"
                   margin="normal"
                   name="password"
                   onBlur={handleBlur}
@@ -141,27 +134,6 @@ const RegisterView = () => {
                   display="flex"
                   ml={-1}
                 >
-                  <Checkbox
-                    checked={values.policy}
-                    name="policy"
-                    onChange={handleChange}
-                  />
-                  <Typography
-                    color="textSecondary"
-                    variant="body1"
-                  >
-                    I have read the
-                    {' '}
-                    <Link
-                      color="primary"
-                      component={RouterLink}
-                      to="#"
-                      underline="always"
-                      variant="h6"
-                    >
-                      Terms and Conditions
-                    </Link>
-                  </Typography>
                 </Box>
                 {Boolean(touched.policy && errors.policy) && (
                   <FormHelperText error>
@@ -177,23 +149,10 @@ const RegisterView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign up now
+                    Salvar
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                  Have an account?
-                  {' '}
-                  <Link
-                    component={RouterLink}
-                    to="/login"
-                    variant="h6"
-                  >
-                    Sign in
-                  </Link>
-                </Typography>
+               
               </form>
             )}
           </Formik>

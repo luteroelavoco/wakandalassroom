@@ -113,7 +113,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
               onClose={handleClose}
             >
               <MenuItem onClick={()=> {navigate("/app/conta"); handleClose();}}>Minha conta</MenuItem>
-              <MenuItem onClick={handleClose}>Sair</MenuItem>
+              <MenuItem onClick={() =>{navigate("/login"); handleClose();}}>Sair</MenuItem>
             </Menu>
           </div>
         </Hidden>

@@ -4,13 +4,9 @@ import clsx from 'clsx';
 import {
   Box,
   Button,
-  Card,
-  CardContent,
-  TextField,
-  InputAdornment,
-  SvgIcon,
   makeStyles
 } from '@material-ui/core';
+import {useNavigate} from 'react-router-dom';
 import { Search as SearchIcon } from 'react-feather';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Toolbar = ({ className, ...rest }) => {
   const classes = useStyles();
-
+  const navigate = useNavigate();
   return (
     <div
       className={clsx(classes.root, className)}
@@ -38,6 +34,7 @@ const Toolbar = ({ className, ...rest }) => {
         <Button
           color="primary"
           variant="contained"
+          onClick={()=> navigate("/novomembro")}
         >
           Adicionar membro
         </Button>

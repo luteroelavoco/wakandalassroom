@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import {
-  Box,
   Container,
-  Grid,
   makeStyles
 } from '@material-ui/core';
 import {useParams} from 'react-router-dom';
 import Page from 'src/components/Page';
 import Toolbar from './Toolbar';
-import data from './data';
 import Images from './Images';
+import Videos from './Videos';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProductList = () => {
   const classes = useStyles();
-  const [products] = useState(data);
+  const [selectedAba , setSeletedAba] = useState(0);
   const { type } = useParams();
   return (
     <Page
@@ -33,9 +32,8 @@ const ProductList = () => {
       title={`Galeria de ${type}`}
     >
       <Container maxWidth={false}>
-        <Toolbar/>
-        <Images />   
-      
+        <Toolbar setSeletedAba={setSeletedAba} /> 
+        { selectedAba ?  <Videos /> : <Images /> }
       </Container>
     </Page>
   );

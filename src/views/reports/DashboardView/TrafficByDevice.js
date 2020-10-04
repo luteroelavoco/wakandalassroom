@@ -81,7 +81,7 @@ const TrafficByDevice = ({ className, ...rest }) => {
     },
     {
       title: 'Celular',
-      value: 23,
+      value: 22,
       icon: PhoneIcon,
       color: colors.orange[600]
     }

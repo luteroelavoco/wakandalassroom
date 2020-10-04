@@ -27,7 +27,7 @@ const routes = [
       { path: 'galeria', element: <GalleryView /> },
       { path: 'galeria/:type', element: <SpecGalleryView /> },
       { path: 'team', element: <TeamView /> },
-      { path: 'settings', element: <SettingsView /> },
+      { path: 'definicoes', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
@@ -36,9 +36,9 @@ const routes = [
     element: <MainLayout />,
     children: [
       { path: 'login', element: <LoginView /> },
-      { path: 'register', element: <RegisterView /> },
+      { path: 'novomembro', element: <RegisterView /> },
       { path: '404', element: <NotFoundView /> },
-      { path: '/', element: <Navigate to="/app/estatistica" /> },
+      { path: '/', element: <Navigate to="/login" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }
