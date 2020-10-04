@@ -5,6 +5,8 @@ import MainLayout from 'src/layouts/MainLayout';
 import AccountView from 'src/views/account/AccountView';
 import CustomerListView from 'src/views/customer/CustomerListView';
 import TeamView from 'src/views/employees/team';
+import GalleryView from 'src/views/gallery/ProductListView';
+import SpecGalleryView from 'src/views/specificgallery/ProductListView';
 import DashboardView from 'src/views/reports/DashboardView';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
@@ -12,6 +14,7 @@ import ProductListView from 'src/views/product/ProductListView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
 
+//specificgallery
 const routes = [
   {
     path: 'app',
@@ -21,6 +24,8 @@ const routes = [
       { path: 'entidades', element: <CustomerListView /> },
       { path: 'estatistica', element: <DashboardView /> },
       { path: 'servicos', element: <ProductListView /> },
+      { path: 'galeria', element: <GalleryView /> },
+      { path: 'galeria/:type', element: <SpecGalleryView /> },
       { path: 'team', element: <TeamView /> },
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }

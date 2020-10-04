@@ -11,7 +11,6 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -45,11 +44,11 @@ const ProductCard = ({ className, product, ...rest }) => {
         >
           <Avatar
             alt="Product"
+          
             src={product.media}
             style={{height : '300px' , width: '300px' , cursor: 'pointer'}}
             variant="square"
-            to={`/app/galeria/${product.title}`}
-            component={RouterLink}
+          
           />
         </Box>
         <Typography

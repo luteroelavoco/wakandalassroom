@@ -46,6 +46,7 @@ const ProductCard = ({ className, product, ...rest }) => {
             alt="Product"
             src={product.media}
             variant="circle"
+            style={{width: '120px', height: '120px'}}
           />
         </Box>
         <Typography
