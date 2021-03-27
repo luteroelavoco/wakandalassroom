@@ -2,6 +2,9 @@ import React from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
+import 'firebase/database';
 import {
   Box,
   Button,
@@ -15,7 +18,7 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     height: '100%',
@@ -28,16 +31,30 @@ const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
 
+  function onSubmit(values, { setFieldError, setSubmitting }) {
+    var db = firebase.firestore();
+    db.collection('alunos')
+      .add({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        presenca: 0
+      })
+      .then(docRef => {
+        navigate('/app/alunos', { replace: true });
+      })
+      .catch(error => {
+        window.alert("Infelizmente ocorreu um erro não foi possicvel salvar esse aluno")
+        setSubmitting(false)
+      });
+  }
   return (
-    <Page
-      className={classes.root}
-      title="Registar usuário"
-    >
+    <Page className={classes.root} title="Registar aluno">
       <Box
         display="flex"
         flexDirection="column"
         height="100%"
-        style={{marginTop: '10px'}}
+        style={{ marginTop: '10px' }}
         justifyContent="center"
       >
         <Container maxWidth="sm">
@@ -46,20 +63,20 @@ const RegisterView = () => {
               email: '',
               firstName: '',
               lastName: '',
-              password: '',
-              policy: false
             }}
-            validationSchema={
-              Yup.object().shape({
-                email: Yup.string().email('O Email deve ser válido').max(255).required('Email é necessário'),
-                firstName: Yup.string().max(255).required('Primeiro nome é obrigatório'),
-                lastName: Yup.string().max(255).required('Último nome é obrigatório'),
-                password: Yup.string().max(255).required('Palavra passe é obrigatório'),
-              })
-            }
-            onSubmit={() => {
-              navigate('/app/estatitica', { replace: true });
-            }}
+            validationSchema={Yup.object().shape({
+              email: Yup.string()
+                .email('O Email deve ser válido')
+                .max(255)
+                .required('Email é necessário'),
+              firstName: Yup.string()
+                .max(255)
+                .required('Primeiro nome é obrigatório'),
+              lastName: Yup.string()
+                .max(255)
+                .required('Último nome é obrigatório')
+            })}
+            onSubmit={onSubmit}
           >
             {({
               errors,
@@ -72,11 +89,8 @@ const RegisterView = () => {
             }) => (
               <form onSubmit={handleSubmit}>
                 <Box mb={3}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                    Adicionar um novo membro
+                  <Typography color="textPrimary" variant="h2">
+                    Adicionar novo aluno
                   </Typography>
                 </Box>
                 <TextField
@@ -116,29 +130,9 @@ const RegisterView = () => {
                   value={values.email}
                   variant="outlined"
                 />
-                <TextField
-                  error={Boolean(touched.password && errors.password)}
-                  fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Senha"
-                  margin="normal"
-                  name="password"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  value={values.password}
-                  variant="outlined"
-                />
-                <Box
-                  alignItems="center"
-                  display="flex"
-                  ml={-1}
-                >
-                </Box>
+                <Box alignItems="center" display="flex" ml={-1}></Box>
                 {Boolean(touched.policy && errors.policy) && (
-                  <FormHelperText error>
-                    {errors.policy}
-                  </FormHelperText>
+                  <FormHelperText error>{errors.policy}</FormHelperText>
                 )}
                 <Box my={2}>
                   <Button
@@ -152,7 +146,6 @@ const RegisterView = () => {
                     Salvar
                   </Button>
                 </Box>
-               
               </form>
             )}
           </Formik>

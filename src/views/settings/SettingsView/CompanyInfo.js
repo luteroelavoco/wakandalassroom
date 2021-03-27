@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
+import {  useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import {
   Box,
   Button,
@@ -13,37 +16,31 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const states = [
-  {
-    value: 'luanda',
-    label: 'Luanda'
-  },
-  {
-    value: 'benguela',
-    label: 'Benguela'
-  },
-  {
-    value: 'namibe',
-    label: 'Namibe'
-  }
-];
-
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
 const CompanyInfo = ({ className, ...rest }) => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const [values, setValues] = useState({
-    email: 'geral@facestudio.me',
-    phone: '+244 911 000 000',
-    state: 'Luanda',
-    country: 'Angola',
-    city: 'Mutamba',
-    address: 'Rua 14',
+    email: '',
+    name: ''
   });
-
-  const handleChange = (event) => {
+  async function onSubmit(){
+    if(values.name.length < 4) {
+      window.alert("Nome  muito curto");
+      return;
+    }
+    if(values.email.length < 4) {
+      window.alert("Email muito curto");
+      return;
+    }
+    await firebase.database().ref("name").set(values.name);
+    await firebase.database().ref("email").set(values.email);
+    navigate('/app/alunos', { replace: true });
+  }
+  const handleChange = event => {
     setValues({
       ...values,
       [event.target.name]: event.target.value
@@ -58,21 +55,22 @@ const CompanyInfo = ({ className, ...rest }) => {
       {...rest}
     >
       <Card>
-        <CardHeader
-          subheader="Informações para contacto"
-          title="Definições"
-        />
+        <CardHeader subheader="Informações para contacto" title="Definições" />
         <Divider />
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Nome"
+                name="name"
+                onChange={handleChange}
+                type="text"
+                value={values.name}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="E-mail"
@@ -83,104 +81,11 @@ const CompanyInfo = ({ className, ...rest }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Número do celular"
-                name="phone"
-                onChange={handleChange}
-                type="phone-number"
-                value={values.phone}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="País"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Seleciona a província"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Bairro"
-                name="firstName"
-                onChange={handleChange}
-                required
-                value={values.city}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Rua"
-                name="address"
-                onChange={handleChange}
-                required
-                value={values.address}
-                variant="outlined"
-              />
-            </Grid>
           </Grid>
         </CardContent>
         <Divider />
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          p={2}
-        >
-          <Button
-            style={{color: '#000'}}
-            variant="contained"
-          >
+        <Box display="flex" justifyContent="flex-end" p={2}>
+          <Button onClick={onSubmit} style={{ color: '#000' }} variant="contained">
             Salvar mudanças
           </Button>
         </Box>

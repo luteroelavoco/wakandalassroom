@@ -6,6 +6,30 @@ export default [
     address: {
       country: 'Angola',
       state: 'Luanda',
+      city: 'Luanda',
+      street: 'Rua Teresa Afonso nº2, Caixa Postal nº1254, Luanda'
+    },
+    email: 'geral@med.gov.ao',
+    name: 'Ministério da Educação',
+    entity : 'Pública'
+  },
+  {
+    id: uuid(),
+    address: {
+      country: 'Angola',
+      state: 'Luanda',
+      city: 'Luanda',
+      street: 'Rua Teresa Afonso nº2, Caixa Postal nº1254, Luanda'
+    },
+    email: 'agt.callcenter@agt.minfin.gov.ao',
+    name: 'Aministração Geral Tributária',
+    entity : 'Pública'
+  },
+  {
+    id: uuid(),
+    address: {
+      country: 'Angola',
+      state: 'Luanda',
       city: 'Belas',
       street: 'Rua Direita do Centro de Convenções Talatona'
     },

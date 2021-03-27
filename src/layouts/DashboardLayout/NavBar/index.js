@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import firebase from 'firebase/app';
+import 'firebase/database';
+
 import {
   Avatar,
   Box,
@@ -22,47 +25,24 @@ import {
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
   UserCheck as UserChekIcon,
-  Image as ImageIcon  
+  Image as ImageIcon
 } from 'react-feather';
 import NavItem from './NavItem';
 
-const user = {
-  avatar: '/static/images/avatars/avatar.jpg',
-  jobTitle: 'CEO',
-  name: 'Ilya Machado'
-};
+
 
 const items = [
+  
   {
-    href: '/app/estatistica',
-    icon: BarChartIcon,
-    title: 'Estátistica'
-  },
-  {
-    href: '/app/entidades',
+    href: '/app/alunos',
     icon: UsersIcon,
-    title: 'Entidades'
-  },
-  {
-    href: '/app/servicos',
-    icon: ShoppingBagIcon,
-    title: 'Serviços'
-  },
-  {
-    href: '/app/galeria',
-    icon: ImageIcon,
-    title: 'Galeria'
-  },
-  {
-    href: '/app/team',
-    icon: UserChekIcon,
-    title: 'Team'
+    title: 'Alunos'
   },
   {
     href: '/app/definicoes',
     icon: SettingsIcon,
     title: 'Definições'
-  },
+  }
 ];
 
 const useStyles = makeStyles(() => ({
@@ -84,7 +64,24 @@ const useStyles = makeStyles(() => ({
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
   const location = useLocation();
+  const [user, setUser] = useState({
+    avatar: '/static/images/avatars/avatar.jpg',
+    jobTitle: '',
+    name: ''
+  });
 
+
+  useEffect(()=>{
+    var nome = firebase.database().ref('name');
+    nome.on('value', snapshot => {
+      const nome = snapshot.val();
+      setUser({
+        avatar: '/static/images/avatars/avatar.jpg',
+        jobTitle: 'Professor',
+        name: nome
+      })
+    });
+  },[])
   useEffect(() => {
     if (openMobile && onMobileClose) {
       onMobileClose();
@@ -93,41 +90,25 @@ const NavBar = ({ onMobileClose, openMobile }) => {
   }, [location.pathname]);
 
   const content = (
-    <Box
-      height="100%"
-      display="flex"
-      flexDirection="column"
-    >
-      <Box
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        p={2}
-      >
+    <Box height="100%" display="flex" flexDirection="column">
+      <Box alignItems="center" display="flex" flexDirection="column" p={2}>
         <Avatar
           className={classes.avatar}
           component={RouterLink}
           src={user.avatar}
-          to="/app/conta"
+          to="/app/definicoes"
         />
-        <Typography
-          className={classes.name}
-          color="textPrimary"
-          variant="h5"
-        >
+        <Typography className={classes.name} color="textPrimary" variant="h5">
           {user.name}
         </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
+        <Typography color="textSecondary" variant="body2">
           {user.jobTitle}
         </Typography>
       </Box>
       <Divider />
       <Box p={2}>
         <List>
-          {items.map((item) => (
+          {items.map(item => (
             <NavItem
               href={item.href}
               key={item.title}
@@ -138,7 +119,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         </List>
       </Box>
       <Box flexGrow={1} />
-      
     </Box>
   );
 

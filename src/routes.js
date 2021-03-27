@@ -21,12 +21,11 @@ const routes = [
     element: <DashboardLayout />,
     children: [
       { path: 'conta', element: <AccountView /> },
-      { path: 'entidades', element: <CustomerListView /> },
+      { path: 'alunos', element: <TeamView /> },
       { path: 'estatistica', element: <DashboardView /> },
       { path: 'servicos', element: <ProductListView /> },
       { path: 'galeria', element: <GalleryView /> },
       { path: 'galeria/:type', element: <SpecGalleryView /> },
-      { path: 'team', element: <TeamView /> },
       { path: 'definicoes', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
@@ -36,7 +35,7 @@ const routes = [
     element: <MainLayout />,
     children: [
       { path: 'login', element: <LoginView /> },
-      { path: 'novomembro', element: <RegisterView /> },
+      { path: 'novo-aluno', element: <RegisterView /> },
       { path: '404', element: <NotFoundView /> },
       { path: '/', element: <Navigate to="/login" /> },
       { path: '*', element: <Navigate to="/404" /> }

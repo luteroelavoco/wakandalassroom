@@ -34,9 +34,9 @@ const Toolbar = ({ className, ...rest }) => {
         <Button
           color="primary"
           variant="contained"
-          onClick={()=> navigate("/novomembro")}
+          onClick={()=> navigate("/novo-aluno")}
         >
-          Adicionar membro
+          Adicionar aluno
         </Button>
       </Box>
      

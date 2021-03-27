@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import firebase from 'firebase/app';
+import 'firebase/database';
 import {
   Box,
   Button,
@@ -30,6 +32,19 @@ const Password = ({ className, ...rest }) => {
     });
   };
 
+  async function onSubmit(){
+
+    if(values.password != values.confirm) {
+      window.alert("As palavras passe precisam ser iguais");
+      return;
+    }
+    if(values.password.length < 4) {
+      window.alert("Palavra passe muito curta");
+      return;
+    }
+    await firebase.database().ref("senha").set(values.password);
+    window.alert("Palavra passe alterada")
+  }
   return (
     <form
       className={clsx(classes.root, className)}
@@ -70,6 +85,8 @@ const Password = ({ className, ...rest }) => {
           p={2}
         >
           <Button
+           onClick={onSubmit}
+
             color="primary"
             variant="contained"
           >

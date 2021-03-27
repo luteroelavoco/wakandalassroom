@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import firebase from 'firebase/app';
+import 'firebase/database';
+
 import {
   Box,
   Button,
@@ -12,11 +15,9 @@ import {
   Typography,
   makeStyles
 } from '@material-ui/core';
-import FacebookIcon from 'src/icons/Facebook';
-import GoogleIcon from 'src/icons/Google';
 import Page from 'src/components/Page';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: theme.palette.background.dark,
     height: '100%',
@@ -28,12 +29,40 @@ const useStyles = makeStyles((theme) => ({
 const LoginView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const [values, setValues] = useState({});
+  
+  const handleChange = event => {
+    setValues(({
+      [event.target.name]: event.target.value
+    }));
+  };
+
+  function onSubmit(values, { setFieldError, setSubmitting }) {
+    var email = firebase.database().ref("email");
+    email.on('value', (snapshot) => {
+      const data = snapshot.val();
+      if(data == values.email){
+        var senha = firebase.database().ref("senha");
+        senha.on('value', (snapshot) => {
+          const dataSenha = snapshot.val();
+          if(dataSenha == values.password){
+            navigate('/app/alunos', { replace: true });
+          }
+          else{
+            setFieldError('password', 'senha digitada está errada');
+            setSubmitting(false);
+          }
+        });
+      }
+      else{
+        setFieldError('email', 'este não é o email do admnistrador');
+        setSubmitting(false);
+      }
+    });
+  }
 
   return (
-    <Page
-      className={classes.root}
-      title="Iniciar Sessão"
-    >
+    <Page className={classes.root} title="Iniciar Sessão">
       <Box
         display="flex"
         flexDirection="column"
@@ -43,41 +72,29 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'ilyamachado@facestudio.me',
+              email: '',
               password: ''
             }}
             validationSchema={Yup.object().shape({
-              email: Yup.string().email('O emaail precisa ser válido').max(255).required('Email é obrigatorio'),
-              password: Yup.string().max(255).required('Insira uma password válida')
+              email: Yup.string()
+                .email('O emaail precisa ser válido')
+                .max(255)
+                .required('Email é obrigatorio'),
+              password: Yup.string()
+                .max(255)
+                .required('Insira uma password válida')
             })}
-            onSubmit={() => {
-              navigate('/app/estatistica', { replace: true });
-            }}
+            onSubmit={onSubmit}
           >
-            {({
-              errors,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-              isSubmitting,
-              touched,
-              values
-            }) => (
+            {({ errors, handleBlur, handleSubmit, isSubmitting, touched, handleChange: handleChange , values:values }) => (
               <form onSubmit={handleSubmit}>
                 <Box mb={3}>
-                  <Typography
-                    color="textPrimary"
-                    variant="h2"
-                  >
-                    Iniciar sessão 
+                  <Typography color="textPrimary" variant="h2">
+                    Iniciar sessão
                   </Typography>
                 </Box>
-               
-                <Box
-                  mt={3}
-                  mb={1}
-                >
-                </Box>
+
+                <Box mt={3} mb={1}></Box>
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -102,6 +119,7 @@ const LoginView = () => {
                   onChange={handleChange}
                   type="password"
                   value={values.password}
+                  ccc
                   variant="outlined"
                 />
                 <Box my={2}>
@@ -116,13 +134,6 @@ const LoginView = () => {
                     Entrar
                   </Button>
                 </Box>
-                <Typography
-                  color="textSecondary"
-                  variant="body1"
-                >
-                Esta aplicação esta em fase de teste,
-                <b> insira qualquer senha para entrar.</b>
-                </Typography>
               </form>
             )}
           </Formik>

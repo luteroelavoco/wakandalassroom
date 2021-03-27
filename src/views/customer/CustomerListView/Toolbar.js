@@ -39,32 +39,11 @@ const Toolbar = ({ className, ...rest }) => {
           color="primary"
           variant="contained"
         >
-          Exportar
+          Adicionar Aluno
         </Button>
       </Box>
       <Box mt={3}>
         <Card>
-          <CardContent>
-            <Box maxWidth={500}>
-              <TextField
-                fullWidth
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SvgIcon
-                        fontSize="small"
-                        color="action"
-                      >
-                        <SearchIcon />
-                      </SvgIcon>
-                    </InputAdornment>
-                  )
-                }}
-                placeholder="Pesquisar cliente"
-                variant="outlined"
-              />
-            </Box>
-          </CardContent>
         </Card>
       </Box>
     </div>

@@ -69,20 +69,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
         </RouterLink>
         <Box flexGrow={1} />
         <Hidden mdDown>
-          <IconButton style={{ color: '#fff' }}>
-            <Badge badgeContent={notifications.length} color="#fff" max={999}>
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <IconButton style={{ color: '#fff' }}>
-            <Badge
-              badgeContent={notifications.length - 10}
-              color="#fff"
-              max={999}
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+        
           <div>
             <IconButton
               aria-label="account of current user"
@@ -112,7 +99,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={()=> {navigate("/app/conta"); handleClose();}}>Minha conta</MenuItem>
+              <MenuItem onClick={()=> {navigate("/app/definicoes"); handleClose();}}>Minha conta</MenuItem>
               <MenuItem onClick={() =>{navigate("/login"); handleClose();}}>Sair</MenuItem>
             </Menu>
           </div>

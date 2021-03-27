@@ -43,10 +43,10 @@ const ProductCard = ({ className, product, ...rest }) => {
           mb={3}
         >
           <Avatar
-            alt="Product"
+            alt={product.title}
             src={product.media}
-            variant="circle"
-            style={{width: '120px', height: '120px'}}
+            variant="square"
+            style={{width: '100px', height: '100px'}}
           />
         </Box>
         <Typography
@@ -54,8 +54,18 @@ const ProductCard = ({ className, product, ...rest }) => {
           color="textPrimary"
           gutterBottom
           variant="h4"
+          style={{marginTop: '-20px', marginBottom: '5px'}}
         >
           {product.title}
+        </Typography>
+
+        <Typography
+          align="center"
+          color="textPrimary"
+          gutterBottom
+          variant="h8"
+        >
+          {product.desc}
         </Typography>
 
       </CardContent>

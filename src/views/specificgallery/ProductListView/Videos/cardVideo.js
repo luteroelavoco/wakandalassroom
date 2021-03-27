@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import "../../../../../node_modules/video-react/dist/video-react.css";
 import clsx from 'clsx';
 import {
   Avatar,
